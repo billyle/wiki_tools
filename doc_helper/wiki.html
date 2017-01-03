@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>wiki文档生成页面</title>
+		<style type="text/css">
+			ul {
+				padding-left: 0px;
+				margin-top: 0px;
+			}
+			
+			li {
+				list-style: none;
+				min-height: 19px;
+				margin-top: 1px;
+			}
+		</style>
+		<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var template = $("#out").text();
+				console.log(template);
+				$("#gen").click(function() {
+					var bigTitle = $("#bigTitle").val();
+					var baseUrl = $("#baseUrl").val();
+					var interfaceId = $("#interfaceId").val();
+					var interfaceName = $("#interfaceName").val();
+					$("#out").empty();
+					var data = template.replace(/\$bigTitle/g, bigTitle)
+						.replace(/\$baseUrl/g, baseUrl)
+						.replace(/\$interfaceId/g, interfaceId)
+						.replace(/\$interfaceName/g, interfaceName);
+					console.log(data);
+					$("#out").text(data);
+				});
+			})
+		</script>
+	</head>
+
+	<body>
+		大标题
+		<input type="text" id="bigTitle" value="" />
+		<br /> 基础url
+		<input type="text" id="baseUrl" value="https://m.jufan.tv/cgi" />
+		<br /> 接口id
+		<input type="text" id="interfaceId" />
+		<br /> 接口名称
+		<input type="text" id="interfaceName" />
+		<br />
+		<input type="button" id="gen" value="生成" />
+		<br />
+
+		<pre id="out">
+===== $bigTitle =====
+
+==== 通用说明 ====
+
+[[live.jufan.tv:index|手机直播应用接口通用规则]]
+
+----
+
+====$interfaceId====
+
+**【接口ID】: **/$interfaceId
+
+**【功能描述】: ** $interfaceName
+
+**【请求路径】：**$baseUrl/$interfaceId
+
+**【Referer限制】: **NULL|* 
+
+**【Method限制】: **GET|POST 
+
+**【请求参数说明】: ** 
+
+^ 参数名称 ^ 参数类型 ^ 必须的 ^ 说明 ^
+| uid | long | true | 用户id |
+| &ltcolor red>r&lt/color> | String | false | &ltcolor red>随机参数，防止缓存&lt/color> |
+
+**【测试用例】: **$baseUrl/$interfaceId
+
+**【返回结果】: **
+
+&ltcode javascript>
+{
+ state: 0,
+ content: {}
+}
+&lt/code>
+
+**【错误码说明】:**
+
+^ 错误码 ^ 错误原因 ^
+| 0 | 成功 |
+
+----
+		</pre>
+	</body>
+
+</html>
